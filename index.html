@@ -6,14 +6,18 @@
   <title>Carry What They Carried</title>
   <style>
     :root {
-      --bg: #f7f7f4;
-      --text: #111;
-      --muted: #666;
-      --line: #d8d8d2;
-      --button: #111;
-      --button-text: #fff;
+      --bg: #ffffff;
+      --panel: #f6f6f3;
+      --text: #111111;
+      --muted: #5f5f5f;
+      --line: #d7d7d0;
+      --button: #111111;
+      --button-text: #ffffff;
+      --maroon: #7f0000;
     }
+
     * { box-sizing: border-box; }
+
     body {
       margin: 0;
       font-family: Arial, Helvetica, sans-serif;
@@ -21,95 +25,175 @@
       color: var(--text);
       line-height: 1.45;
     }
+
     main {
       width: 100%;
-      max-width: 620px;
+      max-width: 760px;
       margin: 0 auto;
-      padding: 32px 22px 56px;
+      padding: 42px 20px 64px;
     }
+
+    .site-title {
+      text-align: center;
+      font-size: clamp(2rem, 7vw, 3rem);
+      line-height: 1.05;
+      font-weight: 900;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      margin: 0 0 32px;
+    }
+
+    .panel {
+      background: var(--panel);
+      padding: 24px;
+      margin: 0 auto 22px;
+    }
+
     .small {
       font-size: 0.9rem;
       color: var(--muted);
-      margin-bottom: 28px;
+      margin-bottom: 22px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
     }
+
     h1 {
-      font-size: 2.1rem;
-      line-height: 1.05;
+      font-size: clamp(2.25rem, 8vw, 3.5rem);
+      line-height: 1.02;
       margin: 0 0 8px;
-      font-weight: 700;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+    }
+
+    h2 {
+      font-size: clamp(1.8rem, 6vw, 2.65rem);
+      line-height: 1.05;
+      margin: 0 0 22px;
+      font-weight: 900;
       letter-spacing: -0.03em;
     }
+
     .label {
       color: var(--muted);
-      font-size: 0.95rem;
-      margin-bottom: 26px;
+      font-size: 1rem;
+      margin-bottom: 24px;
       font-style: italic;
     }
+
     .meta {
       border-top: 1px solid var(--line);
       border-bottom: 1px solid var(--line);
       padding: 14px 0;
-      margin-bottom: 28px;
+      margin-bottom: 26px;
     }
+
     .meta-row {
       display: flex;
       justify-content: space-between;
-      gap: 16px;
+      gap: 18px;
       padding: 7px 0;
       font-size: 1rem;
     }
+
     .meta-row span:first-child { color: var(--muted); }
+
     .description {
+      color: var(--muted);
+      font-size: 1.08rem;
       white-space: pre-line;
-      font-size: 1.05rem;
-      margin-bottom: 30px;
+      margin-bottom: 28px;
     }
+
     .instruction {
       border-top: 1px solid var(--line);
-      padding-top: 24px;
-      margin-top: 28px;
-      font-size: 1.25rem;
-      font-weight: 700;
+      padding-top: 22px;
+      margin-top: 26px;
+      font-size: 1.3rem;
+      font-weight: 900;
       white-space: pre-line;
     }
+
     .bottom-message {
-      margin-top: 34px;
-      padding-top: 18px;
-      border-top: 1px solid var(--line);
-      color: var(--muted);
-      font-size: 1rem;
+      margin-top: 26px;
+      padding: 16px 18px;
+      border: 3px solid var(--maroon);
+      color: var(--maroon);
+      font-size: 1.08rem;
+      font-weight: 900;
       white-space: pre-line;
     }
+
     .button-row {
-      margin-top: 32px;
+      margin-top: 26px;
       display: flex;
       flex-direction: column;
-      gap: 14px;
+      gap: 12px;
     }
+
     .button {
       display: block;
       width: 100%;
-      border: none;
+      border: 2px solid var(--button);
       background: var(--button);
       color: var(--button-text);
-      padding: 16px 18px;
+      padding: 15px 18px;
       font-size: 1rem;
-      font-weight: 700;
+      font-weight: 900;
       text-align: center;
       text-decoration: none;
       border-radius: 0;
       cursor: pointer;
     }
+
     .secondary {
       background: transparent;
       color: var(--text);
-      border: 1px solid var(--text);
+      border: 2px solid var(--text);
     }
-    .about {
-      margin-top: 26px;
-      font-size: 0.95rem;
-      color: var(--muted);
+
+    .number-list {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      margin-top: 20px;
     }
+
+    .number-link {
+      display: grid;
+      grid-template-columns: 54px 1fr;
+      align-items: center;
+      gap: 14px;
+      border: 2px solid var(--text);
+      color: var(--text);
+      text-decoration: none;
+      background: #fff;
+      min-height: 56px;
+    }
+
+    .number-box {
+      height: 100%;
+      min-height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--text);
+      color: #fff;
+      font-size: 1.15rem;
+      font-weight: 900;
+    }
+
+    .number-name {
+      font-weight: 800;
+      padding-right: 14px;
+    }
+
+    .qr-note {
+      margin-top: 22px;
+      font-size: 1.08rem;
+      color: var(--text);
+      font-weight: 700;
+    }
+
     ul { padding-left: 20px; }
   </style>
 </head>
@@ -386,15 +470,19 @@ Names are presented as they appear in public reporting.
 Labels indicate:
 • Verified Name — consistently reported across sources
 • Pseudonym — anonymized in reporting
-• Reported Identity — suggested but not consistently confirmed
+• Reported Identity — suggested but not consistently confirmed`;
 
-Detention length is measured in months.
+    const bottomMessage = `Detention length is measured in months.
 Your experience is measured in minutes.`;
+
+    const artistText = `About the Artist
+
+Add your artist statement here. You can write about why you made this installation, your relationship to the topic, how participants should move through the work, and what you want them to carry away from the experience.`;
 
     const app = document.getElementById("app");
 
     function escapeHTML(value) {
-      return String(value)
+      return String(value ?? "")
         .replaceAll("&", "&amp;")
         .replaceAll("<", "&lt;")
         .replaceAll(">", "&gt;")
@@ -402,11 +490,16 @@ Your experience is measured in minutes.`;
         .replaceAll("'", "&#039;");
     }
 
+    function textBlock(value) {
+      return escapeHTML(value).replace(/
+/g, "<br>");
+    }
+
     function getParams() {
       const params = new URLSearchParams(window.location.search);
       return {
-        person: params.get("person") || cases[0].slug,
-        step: params.get("step") || "entry"
+        person: params.get("person"),
+        step: params.get("step") || "home"
       };
     }
 
@@ -420,8 +513,7 @@ Your experience is measured in minutes.`;
       if (step === "checkpoint2") return "Checkpoint 2";
       if (step === "checkpoint3") return "Checkpoint 3";
       if (step === "exit") return "Exit";
-      if (step === "about") return "About";
-      return "Entry";
+      return "";
     }
 
     function nextInfo(step) {
@@ -429,7 +521,7 @@ Your experience is measured in minutes.`;
       if (step === "checkpoint1") return ["checkpoint2", "Continue to Checkpoint 2"];
       if (step === "checkpoint2") return ["checkpoint3", "Continue to Checkpoint 3"];
       if (step === "checkpoint3") return ["exit", "Continue to Exit"];
-      return ["about", "About this installation"];
+      return ["home", "Return Home"];
     }
 
     function instructionFor(data, step) {
@@ -441,55 +533,87 @@ Your experience is measured in minutes.`;
       return "";
     }
 
-    function render() {
+    function renderHome() {
+      const links = cases.map(item => `
+        <a class="number-link" href="?person=${encodeURIComponent(item.slug)}&step=entry">
+          <span class="number-box">${escapeHTML(item.id)}</span>
+          <span class="number-name">${escapeHTML(item.name)}</span>
+        </a>
+      `).join("");
+
+      app.innerHTML = `
+        <div class="site-title">Carry What They Carried</div>
+        <section class="panel">
+          <h2>About</h2>
+          <div class="description">${textBlock(globalNote)}</div>
+          <div class="bottom-message">${textBlock(bottomMessage)}</div>
+          <div class="qr-note">On the back of the QR code, you will see a number 1–15. Please select the number in your tote bag.</div>
+          <div class="number-list">${links}</div>
+          <div class="button-row">
+            <a class="button secondary" href="?step=artist">About the Artist</a>
+          </div>
+        </section>
+      `;
+    }
+
+    function renderArtist() {
+      app.innerHTML = `
+        <div class="site-title">Carry What They Carried</div>
+        <section class="panel">
+          <div class="description">${textBlock(artistText)}</div>
+          <div class="button-row">
+            <a class="button secondary" href="?step=home">Return Home</a>
+          </div>
+        </section>
+      `;
+    }
+
+    function renderCase() {
       const { person, step } = getParams();
       const data = findCase(person);
-
-      if (step === "about") {
-        app.innerHTML = `
-          <div class="small">Carry What They Carried</div>
-          <h1>About</h1>
-          <div class="description about">${escapeHTML(globalNote)}</div>
-          <div class="button-row">
-            <a class="button secondary" href="?person=${encodeURIComponent(data.slug)}&step=entry">Return</a>
-          </div>
-        `;
-        return;
-      }
-
       const isEntry = step === "entry";
       const isExit = step === "exit";
       const [nextStep, nextLabel] = nextInfo(step);
-      const nextHref = `?person=${encodeURIComponent(data.slug)}&step=${nextStep}`;
+      const nextHref = nextStep === "home" ? `?step=home` : `?person=${encodeURIComponent(data.slug)}&step=${nextStep}`;
       const instruction = instructionFor(data, step);
 
       app.innerHTML = `
-        <div class="small">${escapeHTML(titleForStep(step))}</div>
-        <h1>${escapeHTML(data.name)}</h1>
-        <div class="label">${escapeHTML(data.label)}</div>
+        <div class="site-title">Carry What They Carried</div>
+        <section class="panel">
+          <div class="small">${escapeHTML(titleForStep(step))}</div>
+          <h1>${escapeHTML(data.name)}</h1>
+          <div class="label">${escapeHTML(data.label)} · ID ${escapeHTML(data.id)}</div>
 
-        ${isEntry ? `
-          <div class="meta">
-            <div class="meta-row"><span>Detention stay / weight</span><strong>${escapeHTML(data.detentionStay)}</strong></div>
-            <div class="meta-row"><span>Balloons</span><strong>${escapeHTML(data.balloons)}</strong></div>
-            <div class="meta-row"><span>Bricks</span><strong>${escapeHTML(data.bricks)}</strong></div>
-          </div>
-          <div class="description">${escapeHTML(data.description)}</div>
-        ` : ""}
+          ${isEntry ? `
+            <div class="meta">
+              <div class="meta-row"><span>Detention stay / weight</span><strong>${escapeHTML(data.detentionStay)}</strong></div>
+              <div class="meta-row"><span>Balloons</span><strong>${escapeHTML(data.balloons)}</strong></div>
+              <div class="meta-row"><span>Bricks</span><strong>${escapeHTML(data.bricks)}</strong></div>
+            </div>
+            <div class="description">${textBlock(data.description)}</div>
+          ` : ""}
 
-        <div class="instruction">${escapeHTML(instruction)}</div>
+          <div class="instruction">${textBlock(instruction)}</div>
+          <div class="bottom-message">${textBlock(bottomMessage)}</div>
 
-        ${!isExit ? `
           <div class="button-row">
-            <a class="button" href="${nextHref}">${escapeHTML(nextLabel)}</a>
-            <a class="button secondary" href="?person=${encodeURIComponent(data.slug)}&step=about">About this installation</a>
+            ${!isExit ? `<a class="button" href="${nextHref}">${escapeHTML(nextLabel)}</a>` : ""}
+            <a class="button secondary" href="?step=home">Return Home</a>
+            <a class="button secondary" href="?step=artist">About the Artist</a>
           </div>
-        ` : `
-          <div class="button-row">
-            <a class="button secondary" href="?person=${encodeURIComponent(data.slug)}&step=about">About this installation</a>
-          </div>
-        `}
+        </section>
       `;
+    }
+
+    function render() {
+      const { step } = getParams();
+      if (step === "home" || (!new URLSearchParams(window.location.search).has("step") && !new URLSearchParams(window.location.search).has("person"))) {
+        renderHome();
+      } else if (step === "artist") {
+        renderArtist();
+      } else {
+        renderCase();
+      }
     }
 
     render();

@@ -491,8 +491,7 @@ Add your artist statement here. You can write about why you made this installati
     }
 
     function textBlock(value) {
-      return escapeHTML(value).replace(/
-/g, "<br>");
+      return escapeHTML(value).replace(/\n/g, "<br>");
     }
 
     function getParams() {

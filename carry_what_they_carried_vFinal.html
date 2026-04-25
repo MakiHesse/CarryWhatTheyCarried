@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Carry What They Carried</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --panel: #f6f6f3;
+      --text: #111111;
+      --muted: #5f5f5f;
+      --line: #d7d7d0;
+      --maroon: #7f0000;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.45;
+    }
+
+    main {
+      width: 100%;
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 42px 20px 64px;
+    }
+
+    .site-title {
+      text-align: center;
+      font-size: clamp(2rem, 7vw, 3rem);
+      line-height: 1.05;
+      font-weight: 900;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      margin: 0 0 32px;
+    }
+
+    .panel {
+      background: var(--panel);
+      padding: 24px;
+      margin: 0 auto 22px;
+    }
+
+    .top-link {
+      display: inline-block;
+      color: var(--text);
+      font-weight: 900;
+      text-decoration: none;
+      margin-bottom: 22px;
+      border-bottom: 2px solid var(--text);
+    }
+
+    .small {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-bottom: 22px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    h1 {
+      font-size: clamp(2.35rem, 9vw, 4rem);
+      line-height: 1.02;
+      margin: 0 0 26px;
+      font-weight: 900;
+      letter-spacing: -0.05em;
+    }
+
+    h2 {
+      font-size: clamp(1.8rem, 6vw, 2.65rem);
+      line-height: 1.05;
+      margin: 0 0 22px;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+    }
+
+    .description {
+      color: var(--muted);
+      font-size: 1.08rem;
+      white-space: pre-line;
+      margin-bottom: 28px;
+    }
+
+    .instruction {
+      border-top: 1px solid var(--line);
+      padding-top: 28px;
+      margin-top: 34px;
+      font-size: 1.35rem;
+      font-weight: 900;
+      white-space: pre-line;
+    }
+
+    .bottom-message {
+      margin-top: 28px;
+      color: var(--maroon);
+      font-size: 1.08rem;
+      font-weight: 900;
+      white-space: pre-line;
+    }
+
+    .button-row {
+      margin-top: 30px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .button {
+      display: block;
+      width: 100%;
+      border: 2px solid var(--text);
+      background: var(--text);
+      color: white;
+      padding: 15px 18px;
+      font-size: 1rem;
+      font-weight: 900;
+      text-align: center;
+      text-decoration: none;
+      border-radius: 0;
+      cursor: pointer;
+    }
+
+    .secondary {
+      background: transparent;
+      color: var(--text);
+      border: 2px solid var(--text);
+    }
+
+    .number-list {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .number-link {
+      display: grid;
+      grid-template-columns: 54px 1fr;
+      align-items: center;
+      gap: 14px;
+      border: 2px solid var(--text);
+      color: var(--text);
+      text-decoration: none;
+      background: #fff;
+      min-height: 56px;
+    }
+
+    .number-box {
+      height: 100%;
+      min-height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--text);
+      color: #fff;
+      font-size: 1.15rem;
+      font-weight: 900;
+    }
+
+    .number-name {
+      font-weight: 800;
+      padding-right: 14px;
+    }
+
+    .qr-note {
+      margin-top: 22px;
+      font-size: 1.08rem;
+      color: var(--text);
+      font-weight: 700;
+    }
+
+
+    /* v11 visual upgrades */
+    .panel {
+      animation: pageFade 420ms ease both;
+      box-shadow: 0 18px 42px rgba(0, 0, 0, 0.055);
+      transition: background 260ms ease, color 260ms ease, border-color 260ms ease;
+    }
+
+    @keyframes pageFade {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .progress-wrap {
+      margin: 8px 0 28px;
+      padding: 14px 0 2px;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      color: var(--muted);
+      font-size: 0.78rem;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .progress-track {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .step-dot {
+      height: 9px;
+      border: 1px solid var(--text);
+      background: transparent;
+    }
+
+    .step-dot.active,
+    .step-dot.complete {
+      background: var(--text);
+    }
+
+    .weight-indicator {
+      border: 1px solid var(--line);
+      padding: 14px;
+      margin: 0 0 26px;
+      background: rgba(255, 255, 255, 0.55);
+    }
+
+    .weight-copy {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 10px;
+      font-size: 0.82rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--muted);
+    }
+
+    .weight-bar {
+      height: 14px;
+      border: 2px solid var(--text);
+      background: #fff;
+      overflow: hidden;
+    }
+
+    .weight-fill {
+      height: 100%;
+      width: var(--weight);
+      background: var(--text);
+      transition: width 600ms ease;
+    }
+
+    .exit-panel {
+      background: #151515;
+      color: #f7f7f2;
+    }
+
+    .exit-panel .top-link,
+    .exit-panel .secondary {
+      color: #f7f7f2;
+      border-color: #f7f7f2;
+    }
+
+    .exit-panel .small,
+    .exit-panel .description,
+    .exit-panel .progress-label,
+    .exit-panel .weight-copy {
+      color: #c9c9c2;
+    }
+
+    .exit-panel .instruction {
+      border-top-color: #555;
+      color: #f7f7f2;
+      font-size: 1.48rem;
+    }
+
+    .exit-panel .bottom-message {
+      color: #ffb3b3;
+    }
+
+    .exit-panel .button {
+      background: #f7f7f2;
+      color: #151515;
+      border-color: #f7f7f2;
+    }
+
+    .exit-panel .secondary {
+      background: transparent;
+      color: #f7f7f2;
+    }
+
+    .exit-panel .progress-wrap,
+    .exit-panel .weight-indicator {
+      border-color: #555;
+      background: rgba(255,255,255,0.04);
+    }
+
+    .exit-panel .step-dot,
+    .exit-panel .weight-bar {
+      border-color: #f7f7f2;
+      background: transparent;
+    }
+
+    .exit-panel .step-dot.active,
+    .exit-panel .step-dot.complete,
+    .exit-panel .weight-fill {
+      background: #f7f7f2;
+    }
+
+  </style>
+</head>
+<body>
+  <main>
+    <section id="app"></section>
+  </main>
+
+  <script>
+    const cases = [
+      {
+            "slug": "heriberto-delvalle",
+            "id": "1",
+            "name": "Heriberto Delvalle",
+            "description": "Detained for over 11 years.\nIdentified in some reporting as Heriberto Delvalle, Heriberto was held in immigration detention for more than a decade without resolution. His case remained in legal limbo, moving slowly through a system that did not produce a clear endpoint. He was released in January 2021 at 71 years old.",
+            "entryInstruction": "Carry this bag. Do not put it down.",
+            "checkpoints": [
+                  "Wait here.Do not move for 30 seconds.",
+                  "Exchange your bag with someone nearby.",
+                  "Stand still. Wait until someone joins you."
+            ],
+            "finalExitText": "You may leave at any time. The weight you carried was scaled. The time was not. As you leave, think of the emotional and physical weight carried by these individuals while detained."
+      },
+      {
+            "slug": "davino-watson",
+            "id": "2",
+            "name": "Davino Watson",
+            "description": "Detained for 1,273 days (~3.5 years).\nThere is no right to a court-appointed attorney in immigration court. Davino Watson, a U.S. citizen, was detained by immigration authorities and denied any form of government compensation.Despite documentation of his citizenship, he remained in custody for years while his case was processed. His detention continued even after evidence of the mistake existed.",
+            "entryInstruction": "Carry this bag. Do not put it down.",
+            "checkpoints": [
+                  "You may move only when someone else passes you.",
+                  "Hold your bag with one hand only.",
+                  "You may leave. Or continue carrying."
+            ],
+            "finalExitText": "You may leave at any time. The weight you carried was scaled. The time was not. As you leave, think of the emotional and physical weight carried by these individuals while detained."
+      },
+      {
+            "slug": "olya",
+            "id": "3",
+            "name": "Olya",
+            "description": "“As we celebrate Melika’s freedom, we recognize that it comes after years of needless suffering inflicted by a system that criminalizes migration and cages immigrants in abhorrent conditions.” - Ayla Kadah, an attorney and fellow at the Center for Constitutional Rights Detained for nearly 3 years.\nOlya sought asylum in the United States and was placed in detention while her claim was reviewed. Her case extended over multiple years, during which she remained confined. The duration of her detention was tied not to a sentence, but to the pace of her case.",
+            "entryInstruction": "Carry this bag. Do not put it down.",
+            "checkpoints": [
+                  "Stay where you are.Continue when told.",
+                  "Carry your bag above your waist. You may move.",
+                  "Place the bag down. Someone else will pick it up."
+            ],
+            "finalExitText": "You may leave at any time. The weight you carried was scaled. The time was not. As you leave, think of the emotional and physical weight carried by these individuals while detained."
+      },
+      {
+            "slug": "vincent-thabiso-jobo",
+            "id": "4",
+            "name": "Vincent Thabiso Jobo",
+            "description": "\"But by the time it got dismissed, he had already been transferred to ICE custody,\" - Jelley, Attorney with the immigrants' rights advocacy group American Gateways. Detained for 21 months.\nVincent Thabiso Jobo was held in detention while contesting his removal from the United States. While there he faced abuse, including no access to medical care, physical injuries, and racial slurs thrown at him by guards. During this time, his case proceeded through the immigration court system. His detention continued throughout the legal process.",
+            "entryInstruction": "Carry this bag. Do not put it down.",
+            "checkpoints": [
+                  "Walk slowly.Slower than is comfortable.",
+                  "You cannot use your dominant hand.",
+                  "Keep carrying.There is no further instruction."
+            ],
+            "finalExitText": "You may leave at any time. The weight you carried was scaled. The time was not. As you leave, think of the emotional and physical weight carried by these individuals while detained."
+      },
+      {
+            "slug": "francisco-morales-torres",
+            "id": "5",
+            "name": "Francisco Morales Torres",
+            "description": "\"Francisco Morales Torres is a 26-year-old man who has lived in the United States since he was 13 years old. An immigration judge has twice ruled in favor of granting him immigration protection, but he was detained by ICE for more than 18 months while the government sought to appeal those rulings.\" - National Immigrant Justice Center Detained for more than 18 months.\nFrancisco Morales Torres was detained for over a year and a half. His case reflects the extended timelines that can occur while awaiting hearings, decisions, or transfers between facilities within the immigration system.",
+            "entryInstruction": "Carry this bag. Do not put it down.",
+            "checkpoints": [
+                  "Wait here.Do not move for 30 seconds.",
+                  "Exchange your bag with someone nearby.",
+                  "Stand still. Wait until someone joins you."
+            ],
+            "finalExitText": "You may leave at any time. The weight you carried was scaled. The time was not. As you leave, think of the emotional and physical weight carried by these individuals while detained."
+      },
+      {
+            "slug": "thomas",
+            "id": "6",
+            "name": "Thomas",
+            "description": "\"despite having a reasonable fear of persecution in Cameroon. Thomas was forced to wait in Mexico for three months before being allowed into the United States to seek asylum. When he was finally allowed into the U.S. he was detained and denied release from detention three times.\" - Immigration Justice Campaign Detained for nearly 18 months.\nIdentified by a pseudonym in reporting, Thomas remained in detention for close to a year and a half. His experience reflects how individuals can remain in custody for prolonged periods while navigating immigration proceedings without a defined endpoint.",
+            "entryInstruction": "Carry this bag. Do not put it down.",
+            "checkpoints": [
+                  "You may move only when someone else passes you.",
+                  "Hold your bag with one hand only.",
+                  "You may leave. Or continue carrying."
+            ],
+            "finalExitText": "You may leave at any time. The weight you carried was scaled. The time was not. As you leave, think of the emotional and physical weight carried by these individuals while detained."
+      },
+      {
+            "slug": "leqaa-kordia",
+            "id": "7",
+            "name": "Leqaa Kordia",
+            "description": "“Since her detention over one year ago, the government has taken every effort to deny her basic rights and freedom, blocking her release not once but twice,” - Travis Fife, staff attorney with the Texas Civil Rights Project Detained for over 1 year.\nLeqaa Kordia was detained for more than a year while her immigration case was processed. Her time in detention extended across multiple legal stages before her eventual release.",
+            "entryInstruction": "Carry this bag. Do not put it down.",
+            "checkpoints": [
+                  "Stay where you are.Continue when told.",
+                  "Carry your bag above your waist. You may move.",
+                  "Place the bag down. Someone else will pick it up."
+            ],
+            "finalExitText": "You may leave at any time. The weight you carried was scaled. The time was not. As you leave, think of the emotional and physical weight carried by these individuals while detained."
+      },
+      {
+            "slug": "dylan-lopez-contreras",
+            "id": "8",
+            "name": "Dylan Lopez Contreras",
+            "description": "Detained for nearly 10 months.\nDylan Lopez Contreras, a new york high school student, was detained for close to a year. His detention interrupted his education and daily life while his immigration status was under review.",
+            "entryInstruction": "Carry this bag. Do not put it down.",
+            "checkpoints": [
+                  "Walk slowly.Slower than is comfortable.",
+                  "You cannot use your dominant hand.",
+                  "Keep carrying.There is no further instruction."
+            ],
+            "finalExitText": "You may leave at any time. The weight you carried was scaled. The time was not. As you leave, think of the emotional and physical weight carried by these individuals while detained."
+      },
+      {
+            "slug": "hayam-el-gamal",
+            "id": "9",
+            "name": "Hayam El Gamal",
+            "description": "\"immigration judge Justin Adams ruled the family was not a flight risk and posed no threat to the public. They were granted a $15,000 bond, but the Trump administration appealed, and Adams later reversed his decision\" - Julián Aguilar, Immigration Reporter Detained for over 10 months.\nHayam El Gamal was detained with her 5 children in a family detention center. Their confinement extended across many months while their case remained pending, highlighting how detention can affect entire families simultaneously.",
+            "entryInstruction": "Carry this bag. Do not put it down.",
+            "checkpoints": [
+                  "Wait here.Do not move for 30 seconds.",
+                  "Exchange your bag with someone nearby.",
+                  "Stand still. Wait until someone joins you."
+            ],
+            "finalExitText": "You may leave at any time. The weight you carried was scaled. The time was not. As you leave, think of the emotional and physical weight carried by these individuals while detained."
+      },
+      {
+            "slug": "angela-osorio",
+            "id": "10",
+            "name": "Angela Osorio",
+            "description": "“ICE released me from detention and my depression came with me. I try to take medication for my depression, but it’s like I never really left detention. My children are the only thing that gives me the strength to keep going. I don’t want anybody to go through what I went through. … I want the chapter to end, but people need to know what happens. I want you to know my story for the people who are still inside suffering.” - Angela Osorio Angela Osorio spent approximately ten months in detention.",
+            "entryInstruction": "Carry this bag. Do not put it down.",
+            "checkpoints": [
+                  "You may move only when someone else passes you.",
+                  "Hold your bag with one hand only.",
+                  "You may leave. Or continue carrying."
+            ],
+            "finalExitText": "You may leave at any time. The weight you carried was scaled. The time was not. As you leave, think of the emotional and physical weight carried by these individuals while detained."
+      },
+      {
+            "slug": "delome-johannes-favi",
+            "id": "11",
+            "name": "Delome Johannes Favi",
+            "description": "\"The couple’s interview with U.S. Citizenship and Immigration Services regarding the [Permanent Resident] application was scheduled for March but was postponed when the immigration office closed due to the pandemic. Mr. Favi was detained for more than nine months.\" - National Immigrant Justice Center Detained for more than 9 months.\nIdentified by a pseudonym in reporting, Favi was held in detention for over nine months while navigating the immigration system. The duration reflects delays inherent in legal processing.",
+            "entryInstruction": "Carry this bag. Do not put it down.",
+            "checkpoints": [
+                  "Stay where you are.Continue when told.",
+                  "Carry your bag above your waist. You may move.",
+                  "Place the bag down. Someone else will pick it up."
+            ],
+            "finalExitText": "You may leave at any time. The weight you carried was scaled. The time was not. As you leave, think of the emotional and physical weight carried by these individuals while detained."
+      },
+      {
+            "slug": "juan-manuel-hernandez",
+            "id": "12",
+            "name": "Juan Manuel Hernandez",
+            "description": "\"He [Juan Manuel Hernandez] has lived in Illinois for more than 30 years and was detained by ICE for more than eight months because he was unable to afford a $2,000 bond set by an immigration judge.\" - National Immigrant Justice Center Detained for more than 8 months.\nJuan Manuel Hernandez remained in detention for over eight months. His case progressed during this time, but detention continued throughout the legal process.",
+            "entryInstruction": "Carry this bag. Do not put it down.",
+            "checkpoints": [
+                  "Walk slowly.Slower than is comfortable.",
+                  "You cannot use your dominant hand.",
+                  "Keep carrying.There is no further instruction."
+            ],
+            "finalExitText": "You may leave at any time. The weight you carried was scaled. The time was not. As you leave, think of the emotional and physical weight carried by these individuals while detained."
+      },
+      {
+            "slug": "felipe-hernandez-espinosa",
+            "id": "13",
+            "name": "Felipe Hernandez Espinosa",
+            "description": "“The conditions are so poor and so bad that people say, ‘I’m going to give up’,” - Sui Chung, executive director at Americans for Immigrant Justice. Detained for nearly 7 months.\nFelipe Hernandez Espinosa was detained for several months while his case moved forward. His time reflects mid-length detention durations that still represent significant disruption and uncertainty.",
+            "entryInstruction": "Carry this bag. Do not put it down.",
+            "checkpoints": [
+                  "Wait here.Do not move for 30 seconds.",
+                  "Exchange your bag with someone nearby.",
+                  "Stand still. Wait until someone joins you."
+            ],
+            "finalExitText": "You may leave at any time. The weight you carried was scaled. The time was not. As you leave, think of the emotional and physical weight carried by these individuals while detained."
+      },
+      {
+            "slug": "ali-faqirzada",
+            "id": "14",
+            "name": "Ali Faqirzada",
+            "description": "\"Faqirzada was arrested by U.S. Immigration and Customs Enforcement officers on Oct. 14 following a credible fear interview, during which an immigration officer told him that he had a viable asylum claim and gave him a November court date to appear before an immigration judge.\" - Maria M. Silva, Staffwriter at Times Union Detained for 6 months.\nAli Faqirzada, a college student, spent approximately six months in detention. His case illustrates how even shorter durations involve extended uncertainty and confinement.",
+            "entryInstruction": "Carry this bag. Do not put it down.",
+            "checkpoints": [
+                  "You may move only when someone else passes you.",
+                  "Hold your bag with one hand only.",
+                  "You may leave. Or continue carrying."
+            ],
+            "finalExitText": "You may leave at any time. The weight you carried was scaled. The time was not. As you leave, think of the emotional and physical weight carried by these individuals while detained."
+      },
+      {
+            "slug": "miguel-victor-chaclan-velasquez",
+            "id": "15",
+            "name": "Miguel Victor Chaclan Velasquez",
+            "description": "\"The family says Chaclan Velasquez has lived in South Florida for 22 years, owns a local business, and previously served as a worship leader at Mary Immaculate Catholic Church in West Palm Beach.\nAlthough he is now out of custody, his immigration case remains active. His attorney says the hope is for legal permanent status — and eventually, U.S. citizenship — if the asylum case is successful. In the meantime, he must comply with court requirements while the process continues.\" - Katie Bente, CBS12 Detained for nearly 6 months.\nMiguel Victor Chaclan Velasquez was held for several months while his case was processed. His experience reflects the shorter end of detention durations within this group, though still marked by uncertainty.",
+            "entryInstruction": "Carry this bag. Do not put it down.",
+            "checkpoints": [
+                  "Walk slowly.Slower than is comfortable.",
+                  "You cannot use your dominant hand.",
+                  "Place the bag down. Someone else will pick it up."
+            ],
+            "finalExitText": "You may leave at any time. The weight you carried was scaled. The time was not. As you leave, think of the emotional and physical weight carried by these individuals while detained."
+      }
+];
+
+    const globalNote = `This installation pairs participants with individuals held in immigration detention.
+
+The weight you carry represents time spent in detention, scaled to available materials.
+
+Names are presented as they appear in public reporting.`;
+
+    const bottomMessage = `Detention length is measured in months.
+Your experience is measured in minutes.`;
+
+    const app = document.getElementById("app");
+
+    function escapeHTML(value) {
+      return String(value ?? "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    function textBlock(value) {
+      return escapeHTML(value).replace(/\n/g, "<br>");
+    }
+
+
+    function descriptionBlock(value) {
+      let text = escapeHTML(value);
+
+      // Preserve exact wording while adding visual breathing room between quote/context, detention length, and narrative.
+      text = text.replace(/\s+(Detained for[^.]*\.)\s*\n?/g, "<br><br>$1<br><br>");
+      text = text.replace(/^(Detained for[^.]*\.)\s*\n/g, "$1<br><br>");
+      text = text.replace(/\n/g, "<br>");
+      return text;
+    }
+
+    function instructionBlock(value) {
+      return textBlock(value)
+        .replace(/\.([A-Z])/g, ".&nbsp; $1")
+        .replace(/\. /g, ".&nbsp; ");
+    }
+
+    function progressBlock(step) {
+      const steps = ["entry", "checkpoint1", "checkpoint2", "checkpoint3", "exit"];
+      const current = Math.max(0, steps.indexOf(step));
+      const dots = steps.map((item, index) => {
+        const state = index < current ? "complete" : index === current ? "active" : "";
+        return `<span class="step-dot ${state}" aria-label="${escapeHTML(item)}"></span>`;
+      }).join("");
+      return `
+        <div class="progress-wrap" aria-label="Installation progress">
+          <div class="progress-label"><span>Entry</span><span>Exit</span></div>
+          <div class="progress-track">${dots}</div>
+        </div>
+      `;
+    }
+
+    function weightBlock(data) {
+      const idNumber = Number(data.id) || 1;
+      const weight = Math.max(35, Math.round(100 - ((idNumber - 1) * (65 / 14))));
+      return `
+        <div class="weight-indicator" aria-label="Scaled weight indicator">
+          <div class="weight-copy">
+            <span>Scaled carried weight</span>
+            <span>${weight}%</span>
+          </div>
+          <div class="weight-bar"><div class="weight-fill" style="--weight:${weight}%;"></div></div>
+        </div>
+      `;
+    }
+
+    function getParams() {
+      const params = new URLSearchParams(window.location.search);
+      return {
+        person: params.get("person"),
+        step: params.get("step") || "home"
+      };
+    }
+
+    function findCase(slug) {
+      return cases.find(item => item.slug === slug) || cases[0];
+    }
+
+    function titleForStep(step) {
+      if (step === "entry") return "Entry";
+      if (step === "checkpoint1") return "Checkpoint 1";
+      if (step === "checkpoint2") return "Checkpoint 2";
+      if (step === "checkpoint3") return "Checkpoint 3";
+      if (step === "exit") return "Exit";
+      return "";
+    }
+
+    function nextInfo(step) {
+      if (step === "entry") return ["checkpoint1", "Continue to Checkpoint 1"];
+      if (step === "checkpoint1") return ["checkpoint2", "Continue to Checkpoint 2"];
+      if (step === "checkpoint2") return ["checkpoint3", "Continue to Checkpoint 3"];
+      if (step === "checkpoint3") return ["exit", "Continue to Exit"];
+      return ["home", "Return Home"];
+    }
+
+    function instructionFor(data, step) {
+      if (step === "entry") return data.entryInstruction;
+      if (step === "checkpoint1") return data.checkpoints[0];
+      if (step === "checkpoint2") return data.checkpoints[1];
+      if (step === "checkpoint3") return data.checkpoints[2];
+      if (step === "exit") return data.finalExitText;
+      return "";
+    }
+
+    function renderHome() {
+      const links = cases.map(item => `
+        <a class="number-link" href="?person=${encodeURIComponent(item.slug)}&step=entry">
+          <span class="number-box">${escapeHTML(item.id)}</span>
+          <span class="number-name">${escapeHTML(item.name)}</span>
+        </a>
+      `).join("");
+
+      app.innerHTML = `
+        <div class="site-title">Carry What They Carried</div>
+        <section class="panel">
+          <h2>About</h2>
+          <div class="description">${textBlock(globalNote)}</div>
+          <div class="bottom-message">${textBlock(bottomMessage)}</div>
+          <div class="qr-note">On the back of the QR code, you will see a number 1–15. Please select the number in your tote bag.</div>
+          <div class="number-list">${links}</div>
+        </section>
+      `;
+    }
+
+    function renderCase() {
+      const { person, step } = getParams();
+      const data = findCase(person);
+      const isEntry = step === "entry";
+      const isExit = step === "exit";
+      const [nextStep, nextLabel] = nextInfo(step);
+      const nextHref = nextStep === "home" ? `?step=home` : `?person=${encodeURIComponent(data.slug)}&step=${nextStep}`;
+      const instruction = instructionFor(data, step);
+
+      app.innerHTML = `
+        <div class="site-title">Carry What They Carried</div>
+        <section class="panel ${isExit ? 'exit-panel' : ''}">
+          <a class="top-link" href="?step=home">Return Home</a>
+          <div class="small">${escapeHTML(titleForStep(step))}</div>
+          <h1>${escapeHTML(data.name)}</h1>
+          ${progressBlock(step)}
+          ${isEntry ? `<div class="description">${descriptionBlock(data.description)}</div>` : ""}
+
+          <div class="instruction">${instructionBlock(instruction)}</div>
+          <div class="bottom-message">${textBlock(bottomMessage)}</div>
+
+          <div class="button-row">
+            ${!isExit ? `<a class="button" href="${nextHref}">${escapeHTML(nextLabel)}</a>` : ""}
+            <a class="button secondary" href="?step=home">Return Home</a>
+          </div>
+        </section>
+      `;
+    }
+
+    function render() {
+      const params = new URLSearchParams(window.location.search);
+      const step = params.get("step") || "home";
+      if (step === "home") {
+        renderHome();
+      } else {
+        renderCase();
+      }
+    }
+
+    render();
+  </script>
+</body>
+</html>
